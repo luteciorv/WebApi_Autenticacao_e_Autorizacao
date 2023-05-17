@@ -9,6 +9,7 @@ namespace WebApi_Autenticacao_Autorizacao_Tipo1.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        // Qualquer um pode acessar
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
@@ -21,5 +22,23 @@ namespace WebApi_Autenticacao_Autorizacao_Tipo1.Controllers
 
             return Ok(user);
         }
+
+        // Qualquer um autenticado pode acessar
+        [HttpGet]
+        [Route("autenticado")]
+        [Authorize]
+        public string Authenticated() => "Qualquer usuário autenticado pode ler esta mensagem.";
+
+        // Apenas usuários convencionais e adminstradores
+        [HttpGet]
+        [Route("usuarios")]
+        [Authorize(Roles = "Admin, User")]
+        public string Users() => "Apenas usuários convencionais e administradores podem ler esta mensagem.";
+
+        // Apenas usuários administradores
+        [HttpGet]
+        [Route("administradores")]
+        [Authorize(Roles = "Admin")]
+        public string Admins() => "Apenas usuários administradores podem ler esta mensagem.";
     }
 }

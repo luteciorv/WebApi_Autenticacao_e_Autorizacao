@@ -24,7 +24,7 @@ namespace WebApi_Autenticacao_Autorizacao_Tipo1.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new(ClaimTypes.Name, user.Username),
-                    new("Role", user.Role)
+                    new(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
