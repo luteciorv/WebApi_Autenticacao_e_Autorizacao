@@ -11,6 +11,7 @@ namespace WebApi.Infra.Repositories
         {
             Users.Add(new User(1, "usuario", "usuario", "User"));
             Users.Add(new User(2, "administrador", "administrador", "Admin"));
+            Users.Add(new User(3, "Luis", "Luis", "SuperAdmin"));
         }
 
         public User? Get(string username, string password)

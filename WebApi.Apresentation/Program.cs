@@ -40,10 +40,17 @@ builder.Services.AddAuthentication(opt =>
 
 // Configurar a autorização
 builder.Services.AddAuthorization(opt =>
-{
-    // Configurar as Policies e Claims
+{   
+    // Configurar acesso por Roles
     opt.AddPolicy("User", policy => policy.RequireClaim("Role", "User"));
     opt.AddPolicy("Admin", policy => policy.RequireClaim("Role", "Admin"));
+
+    // Configurar acesso por Policies
+    opt.AddPolicy("SuperAdmin", policy =>
+        policy.RequireAssertion(context =>
+            context.User.Identity is not null &&
+            context.User.Identity.IsAuthenticated &&
+            context.User.Identity.Name == "Luis"));
 });
 
 // Adicionar o Cors a aplicação

@@ -18,30 +18,49 @@ namespace WebApi.Controllers
             [FromServices] IHandler<LoginRequest, LoginResponse> handler,
             [FromBody] LoginRequest request)
         {
-            var response = handler.Handle(request); 
-            
-            if(!response.Success)
+            var response = handler.Handle(request);
+
+            if (!response.Success)
                 return BadRequest(response.Message);
 
             return Ok(response);
         }
 
-        // Qualquer um autenticado pode acessar
+        // Extrair as informações do User Identity
+        [HttpGet]
+        [Route("user-identity")]
+        [Authorize]
+        public object TokenInfor() => new { HttpContext.User.Identity };
+
+        // (Role) Qualquer usuário autenticado pode acessar
         [HttpGet]
         [Route("autenticado")]
         [Authorize]
         public string Authenticated() => "Qualquer usuário autenticado pode ler esta mensagem.";
 
-        // Apenas usuários convencionais e adminstradores
+        // (Role) Apenas usuários convencionais e adminstradores podem acessar
         [HttpGet]
-        [Route("usuarios")]
-        [Authorize(Roles = "Admin, User")]
+        [Route("usuario")]
+        [Authorize(Roles = "Admin, User, SuperAdmin")]
         public string Users() => "Apenas usuários convencionais e administradores podem ler esta mensagem.";
 
-        // Apenas usuários administradores
+        // (Role) Apenas usuários administradores podem acessar
         [HttpGet]
-        [Route("administradores")]
-        [Authorize(Roles = "Admin")]
+        [Route("admin")]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public string Admins() => "Apenas usuários administradores podem ler esta mensagem.";
+
+        // (Role) Apenas usuários super admins podem acessar
+        [HttpGet]
+        [Route("super-admin")]
+        [Authorize(Roles = "SuperAdmin")]
+        public string SuperAdmins() => "Apenas usuários super administradores podem ler esta mensagem.";
+
+        // (Policy) Apenas usuários super admins podem acessar
+        [HttpGet]
+        [Route("super-admin-politica")]
+        [Authorize(Policy = "SuperAdmin")]
+        public string SuperAdminsPolicy() => "Apenas usuários super administradores podem ler esta mensagem.";
     }
+
 }
