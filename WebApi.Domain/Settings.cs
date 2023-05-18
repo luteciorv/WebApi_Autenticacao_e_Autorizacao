@@ -1,4 +1,4 @@
-﻿namespace WebApi_Autenticacao_Autorizacao_Tipo1
+﻿namespace WebApi
 {
     public static class Settings
     {

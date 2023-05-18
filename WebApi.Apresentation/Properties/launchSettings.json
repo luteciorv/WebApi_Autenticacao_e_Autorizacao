@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "WebApi_Autenticacao_Autorizacao_Tipo1": {
+    "WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

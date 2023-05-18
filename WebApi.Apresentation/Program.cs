@@ -3,9 +3,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WebApi_Autenticacao_Autorizacao_Tipo1;
+using WebApi;
+using WebApi.Application.Services;
+using WebApi.Domain.Commands.Handlers;
+using WebApi.Domain.Commands.Requests;
+using WebApi.Domain.Commands.Responses;
+using WebApi.Domain.Interfaces;
+using WebApi.Infra.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Injeção de dependência
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddTransient<IHandler<LoginRequest, LoginResponse>, LoginHandler>();
 
 // Configurar a autenticação
 var key = Encoding.ASCII.GetBytes(Settings.PrivateKey);

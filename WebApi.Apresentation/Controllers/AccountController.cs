@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApi_Autenticacao_Autorizacao_Tipo1.Models;
-using WebApi_Autenticacao_Autorizacao_Tipo1.Services;
+using WebApi.Domain.Commands.Handlers;
+using WebApi.Domain.Commands.Requests;
+using WebApi.Domain.Commands.Responses;
 
-namespace WebApi_Autenticacao_Autorizacao_Tipo1.Controllers
+namespace WebApi.Controllers
 {
     [Route("api/conta")]
     [ApiController]
@@ -13,14 +14,16 @@ namespace WebApi_Autenticacao_Autorizacao_Tipo1.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] User model)
+        public IActionResult Login(
+            [FromServices] IHandler<LoginRequest, LoginResponse> handler,
+            [FromBody] LoginRequest request)
         {
-            var userService = new UserService();
-            var user = userService.Authenticate(model.Username, model.Password);
-            if (user is null)
-                return BadRequest(new { message = "Usuário ou senha inválido." });
+            var response = handler.Handle(request); 
+            
+            if(!response.Success)
+                return BadRequest(response.Message);
 
-            return Ok(user);
+            return Ok(response);
         }
 
         // Qualquer um autenticado pode acessar

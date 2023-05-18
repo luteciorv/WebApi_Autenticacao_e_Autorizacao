@@ -9,3 +9,12 @@
 ### Links
 	* Vídeo: https://www.youtube.com/watch?v=UZ2Qa4xosl0
         * Artigo: https://balta.io/blog/aspnet-core-autenticacao-autorizacao
+
+### Atualizações
+        * Realizei a refatoração na WebApi dividindo as responsabilidades em projetos (DDD)
+        * Existem 4 projetos ao todo:
+                - Apresentação
+                - Aplicação
+                - Infraestrutura
+                - Domínio
+        
