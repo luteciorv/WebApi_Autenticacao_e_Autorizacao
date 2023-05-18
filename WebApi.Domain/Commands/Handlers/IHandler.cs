@@ -1,8 +1,11 @@
-﻿namespace WebApi.Domain.Commands.Handlers
+﻿using WebApi.Domain.Commands.Requests;
+using WebApi.Domain.Commands.Responses;
+
+namespace WebApi.Domain.Commands.Handlers
 {
     public interface IHandler<Request, Response> 
-        where Request : class 
-        where Response : class
+        where Request : RequestBase 
+        where Response : ResponseBase
     {
         Response Handle(Request request);
     }

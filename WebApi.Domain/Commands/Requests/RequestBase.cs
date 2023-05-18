@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Domain.Commands.Requests
 {
-    public abstract class Request
+    public abstract class RequestBase
     {
         public bool IsValid { get; set; }
 

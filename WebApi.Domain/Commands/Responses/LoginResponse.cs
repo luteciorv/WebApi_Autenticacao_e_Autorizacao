@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Domain.Commands.Responses
 {
-    public class LoginResponse
+    public class LoginResponse : ResponseBase
     {
         public LoginResponse(bool success, object message)
         {
@@ -22,7 +22,5 @@
         public int Id { get; set; }
         public string Username { get; set; }
         public string Token { get; set; }
-        public bool Success { get; set; }
-        public object Message { get; set; }
     }
 }

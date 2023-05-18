@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Domain.Commands.Requests
 {
-    public class LoginRequest : Request
+    public class LoginRequest : RequestBase
     {      
         public string Username { get; set; } = string.Empty;
 
